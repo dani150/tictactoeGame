@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicTacToe</title>
+    <style>
+        body {
+            background-color: black;
+        }
+
+        .container {
+            display: inline-grid;
+            grid-template-columns: auto auto auto;
+            height: 600px;
+            width: 600px;
+            position: absolute;
+            left: 480px;
+            top: 75px;  
+        }
+
+        #restart {
+            background-color:#04AA6D;
+            border-color:antiquewhite;
+            transition-duration: .04s;
+            color:antiquewhite;
+            border-radius: 8px;
+            font-size: 90px;
+        }
+        #restart:hover {background-color: #3e8e41}
+
+        .button {   
+            border: 8px solid antiquewhite;  
+        }
+
+        .button:nth-child(3n) {
+            border-right: none;
+        }
+
+        .button:nth-child(3n+1) {
+            border-left: none;
+        }
+
+        .button:nth-child(-n+3) {
+            border-top: none;
+        }
+
+        .button:nth-child(n+7) {
+            border-bottom: none;
+        }
+        .container.X:not(.alreadyPlayed) .button:hover {
+            background-position: center;
+            background-size: cover;
+            background-image: url("images/x_image.png");
+            opacity: 0.5;
+        }
+        .container.O:not(.alreadyPlayed) .button:hover {
+            background-position: center;
+            background-size: cover;
+            background-image: url("images/o_image.png");
+            opacity: 0.5;
+        }
+        .alreadyPlayed {
+            pointer-events: none;
+        }
+        
+        .button {
+            background-position: center;
+            background-size: cover;
+        }
+        .button:hover {
+            opacity: 0.5;
+        }
+
+        .no_display {
+            display: none;
+        }
+        h1 {
+            color: antiquewhite;
+            font-size: 60px;
+        }
+
+    </style>
+    </head>
+    <body>
+        <h1></h1>
+        <button class="no_display" id="restart"><a onclick="start()">restart</a></button>
+        <div class="container X">
+            <div class="button" onclick="makeMove(0)"></div>
+            <div class="button" onclick="makeMove(1)"></div>
+            <div class="button" onclick="makeMove(2)"></div>
+            <div class="button" onclick="makeMove(3)"></div>
+            <div class="button" onclick="makeMove(4)"></div>
+            <div class="button" onclick="makeMove(5)"></div>
+            <div class="button" onclick="makeMove(6)"></div>
+            <div class="button" onclick="makeMove(7)"></div>
+            <div class="button" onclick="makeMove(8)"></div>
+        </div>
+        <script>
+            const PLAYER_X = "x";
+            const PLAYER_O = "o";
+            const letterXImage = "url('images/x_image.png')";
+            const letterOImage = "url('images/o_image.png')";
+            const winning_combinations = [
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 4, 8],
+                [2, 4, 6]];
+            
+            var board = ["","","","","","","","",""];
+            var current_player = PLAYER_X;
+            var allButtons = document.querySelectorAll(".container .button");
+
+            function isWinner(board, player){
+                return winning_combinations.some(
+                    combo => combo.every(point => board[point] === player));
+            }
+            
+            function start() {
+                var container = document.querySelector(".container");
+                document.querySelector("h1").textContent = "";
+                board = ["","","","","","","","",""];
+                for(var button of allButtons) {
+                    button.style.backgroundImage = "";
+                    button.classList.remove("alreadyPlayed");
+                }
+                current_player = PLAYER_X;
+                document.querySelector("#restart").classList.add("no_display");
+                container.classList.remove("alreadyPlayed", "O");
+                container.classList.add("X");
+            }
+
+            function makeMove(buttonIndex) {
+                var container = document.querySelector(".container");
+                board[buttonIndex] = current_player;
+                let current_button = allButtons[buttonIndex];
+                current_button.style.backgroundImage = current_player == PLAYER_X ? letterXImage : letterOImage;
+                current_button.classList.add("alreadyPlayed");
+                console.log("You clicked button " + buttonIndex + "and current_player is " + current_player);
+                container.classList.add(current_player === PLAYER_X ? "O" : "X");
+                container.classList.remove(current_player === PLAYER_X ? "X" : "O")
+                let isTie = board.every(point => point != "");
+                
+                if(isWinner(board, current_player) || isTie) {
+                    container.classList.add("alreadyPlayed");
+                    document.querySelector("h1").textContent = isTie ? "It's a tie!" : "Player " + current_player + " won!";
+                    console.log(current_player);
+                    document.getElementById("restart").classList.remove("no_display");
+                }else {
+                    current_player = current_player == PLAYER_X ? PLAYER_O : PLAYER_X;
+                }
+            }
+        </script>
+    </body>
+</html>

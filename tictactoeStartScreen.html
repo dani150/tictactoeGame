@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicTacToe</title>
+    <style>
+        body {
+            background-color: black;
+        }
+        #Greet {
+            color:antiquewhite;
+            text-align: center;
+            font-size: 80px;
+        }
+        #start {
+            background-color:#04AA6D;
+            border-color:antiquewhite;
+            transition-duration: .04s;
+            color:antiquewhite;
+            border-radius: 8px;
+            font-size: 90px;
+            position: absolute;
+            right:42%;
+        }
+
+        #start:hover {background-color: #3e8e41}
+
+        #start:active {
+            background-color: #3e8e41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+        .topRow{
+            flex-direction: row;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .middleRow{
+            flex-direction: row;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }  
+        .bottomRow{
+            flex-direction: row;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }  
+       
+        a {
+            text-decoration: none;
+            color: black;
+            display: block;
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+   
+    </style>
+</head>
+<h1>
+    <div id="Greet">Welcome to the wonderful game of TicTacToe.<br>Press Start to begin the match!</div>
+</h1>
+<body>
+    <button id="start"><a href="NEWtictactoe.html">Start</a></button>
+</body>
+</html>
